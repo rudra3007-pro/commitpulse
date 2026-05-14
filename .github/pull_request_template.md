@@ -18,4 +18,6 @@ Fixes # (issue number)
 - [ ] I have run `npm run format` and `npm run lint` locally and resolved all errors (CI will fail otherwise).
 - [ ] My commits follow the Conventional Commits format (e.g., `feat(themes): ...`, `fix(calculate): ...`).
 - [ ] I have updated `README.md` if I added a new theme or URL parameter.
+- [ ] I have started the repo.
+- [ ] I have made sure that i have only one commit to merge in this PR.
 - [ ] The SVG output matches the CommitPulse "premium quality" aesthetic standard (no raw elements, smooth animations, correct fonts).
