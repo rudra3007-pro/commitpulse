@@ -84,5 +84,25 @@ export async function dbDisconnect(): Promise<void> {
   cached.conn = null;
   cached.promise = null;
 }
+/**
+ * Returns the current MongoDB connection state.
+ *
+ * Useful for health checks and monitoring endpoints.
+ *
+ * @returns One of: `'disconnected'`, `'connected'`, `'connecting'`, `'disconnecting'`
+ *
+ * @example
+ * const state = dbStatus();
+ * console.log(`MongoDB is ${state}`);
+ */
+export function dbStatus(): string {
+  const states: Record<number, string> = {
+    0: 'disconnected',
+    1: 'connected',
+    2: 'connecting',
+    3: 'disconnecting',
+  };
+  return states[mongoose.connection.readyState] ?? 'unknown';
+}
 
 export default dbConnect;
