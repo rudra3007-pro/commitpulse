@@ -92,6 +92,7 @@ export async function GET(request: Request) {
       gradient,
       tz: tzParam,
       disable_particles,
+      glow,
     } = parseResult.data;
 
     const themeName = theme || 'dark';
@@ -129,7 +130,7 @@ export async function GET(request: Request) {
     const targetEntity = org || user;
     const borderParam = searchParams.get('border');
     const sanitizedBorder = borderParam ? borderParam.replace(/[^a-fA-F0-9]/g, '') : undefined;
-
+    const animate = searchParams.get('animate') !== 'false';
     const params: BadgeParams = {
       user: targetEntity,
       bg: isAutoTheme ? selectedTheme.bg : bg || selectedTheme.bg,
@@ -160,6 +161,8 @@ export async function GET(request: Request) {
       shading,
       gradient,
       disable_particles,
+      glow,
+      animate,
     };
 
     let calendar;

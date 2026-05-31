@@ -169,6 +169,16 @@ const baseStreakParamsSchema = z.object({
       },
       { message: 'Invalid "to" date format. Use ISO 8601 (e.g. 2023-12-31).' }
     ),
+  date: z
+    .string()
+    .optional()
+    .refine(
+      (val) => {
+        if (!val) return true;
+        return !isNaN(Date.parse(val));
+      },
+      { message: 'Invalid "date" format. Use ISO 8601.' }
+    ),
   tz: z
     .string()
     .optional()
@@ -240,7 +250,22 @@ const baseStreakParamsSchema = z.object({
     .string()
     .optional()
     .transform((val) => val === 'true' || val === '1'),
+  // Glow effect — on by default. Accepts 'true'/'1' (true) or 'false' (false).
+  glow: z.string().optional().transform(toBooleanFlag).default(true),
   entrance: z.enum(['rise', 'fade', 'slide', 'none']).catch('rise').default('rise'),
+
+  // layout parameter: strictly validated — unsupported values return a 400 Bad Request.
+  layout: z
+    .string()
+    .optional()
+    .refine(
+      (val) => {
+        if (val === undefined || val === '') return true;
+        return ['default', 'compact', 'full'].includes(val);
+      },
+      { message: 'Invalid layout format. Supported values: default, compact, full.' }
+    )
+    .transform((val) => (!val ? undefined : val)),
 });
 
 export const streakParamsSchema = baseStreakParamsSchema.refine(
